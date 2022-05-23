@@ -137,4 +137,8 @@ public class WiremockAccountService implements
 ```
 
 
+#### Proxy Internals
+
+![proxy](./img/messageInternals.png)
+
 

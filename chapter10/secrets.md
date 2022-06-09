@@ -14,7 +14,10 @@
 	SOPS_AGE_KEY_FILE=$(pwd)/key.txt sops --decrypt test.yaml 
 
 
-### How to use
+### How to encrypt ssh-rsa
+
+age -R file.pub -e file.yaml > file.enc
+
 
 
 #### Create secrets

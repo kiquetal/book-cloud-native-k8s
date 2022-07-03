@@ -50,3 +50,71 @@ sops --encrypt --encrypted-regex '^(data|stringData)$' \
 
 	sops --decrypt secret.encrypted.yml | kubectl apply -f -
 
+
+#### Creating Config Files From ConfigMaps
+
+```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: demo-config
+  data:
+   config: |
+     greeting: Buongiono
+
+ ```
+
+#### Using ConfigMap
+
+```yaml
+spec:
+  containers:
+    - name: demo
+      image: cloudnatived/demo:hello-config-file
+      ports:
+        - containerPort: 8888
+      volumeMounts:
+      - mountPath: /config/
+        name: demo-config-volume
+        readOnly: true
+  volumes:
+  - name: demo-config-volume
+    configMap:
+      name: demo-config
+      items:
+      - key: config
+        path: demo.yaml
+```        
+
+#### Kubernetes Secrets: Used for store sensitive data.
+
+```yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: demo-secret
+  stringData:
+    magicWord: xyzzy
+```
+#### Using secrets within container
+
+```yaml
+  spec:
+    containers:
+      - name: demo
+        image: cloudnative/demo-hello-secret-env
+        ports:
+          - containerPort: 8088
+        env:
+          - name: MAGIC_WORD
+            valueFrom: 
+              secretKeyRef:
+                name: demo-secret
+                key: magicWord
+```
+
+
+
+
+
+

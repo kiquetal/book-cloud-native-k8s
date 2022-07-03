@@ -141,4 +141,3 @@ public class WiremockAccountService implements
 
 ![proxy](./img/messageInternals.png)
 
-
